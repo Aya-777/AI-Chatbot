@@ -4,7 +4,14 @@ import { Chat } from './components/Chat/Chat';
 import { Controls } from './components/Controls/Controls';
 
 function App() {
-  const [messages, setMessages] = useState(MESSAGES);
+  const [messages, setMessages] = useState([]);
+
+  function handleSend(content){
+    setMessages((prevMessages) => [...prevMessages, {
+      content,
+      role: 'user'
+    }]);
+  }
 
   return (
     <div className={styles.App}>
@@ -17,44 +24,8 @@ function App() {
       <div className={styles.ChatContainer}>
         <Chat messages={messages} />
       </div>
-      <Controls />
+      <Controls onSend={handleSend}/>
     </div>
   );
 }
-
-const MESSAGES = [
-  {
-    role: 'user',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'assistant',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'user',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'assistant',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'user',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'assistant',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'user',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-  {
-    role: 'assistant',
-    content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae libero aperiam eum velit? Inventore maxime incidunt nisi cupiditate officia cum vitae recusandae impedit, suscipit dolorum ipsum dolore, aliquam blanditiis?"
-  },
-]
-
 export default App
