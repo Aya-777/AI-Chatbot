@@ -2,28 +2,24 @@ import { useState } from 'react';
 import styles from './App.module.css';
 import { Chat } from './components/Chat/Chat';
 import { Controls } from './components/Controls/Controls';
-// import { GoogleGenAI } from "@google/genai";
-
-// const apiKey = import.meta.env.VITE_GOOGLE_AI_API_KEY;
-
-// if (!apiKey) {
-//   throw new Error("API key is missing. Check your .env file and Vite config.");
-// }
-
-// const ai = new GoogleGenAI({apiKey: apiKey});
-// const gemini = ai.models.generateContent({
-//   model: "gemini-1.5-flash"
-// });
-// const chat = gemini.startChat({history: []});
+import { Assistant } from './assistants/googleai';
 
 function App() {
   const [messages, setMessages] = useState([]);
+  const assistant = new Assistant();
+
+  function addMessage(message){
+    setMessages((prevMessages) => [...prevMessages, message]);
+  }
 
   function handleSend(content){
-    setMessages((prevMessages) => [...prevMessages, {
-      content,
-      role: 'user'
-    }]);
+    addMessage({content, role: "user"});
+    try {
+      const result = assistant.chat(content);
+      addMessage({content: result, role: "assistant"});
+    } catch (error) {
+      addMessage({content: "Sorry, I couldn't proccess your request. Please try again.", role : "system"});
+    }
   }
 
   return (
