@@ -6,19 +6,21 @@ import { Assistant } from './assistants/googleai';
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const assistant = new Assistant();
+  const [assistant] = useState(() => new Assistant());
 
-  function addMessage(message){
+  function addMessage(message) {
     setMessages((prevMessages) => [...prevMessages, message]);
   }
 
-  function handleSend(content){
-    addMessage({content, role: "user"});
+  async function handleSend(content) {
+    addMessage({ content, role: "user" });
     try {
-      const result = assistant.chat(content);
-      addMessage({content: result, role: "assistant"});
+      const result = await assistant.chat(content);
+      addMessage({ content: result, role: "assistant" });
     } catch (error) {
-      addMessage({content: "Sorry, I couldn't proccess your request. Please try again.", role : "system"});
+      console.error('Failed to send message:', error);
+      const details = error instanceof Error ? error.message : String(error);
+      addMessage({ content: `The AI request failed: ${details}`, role: "system" });
     }
   }
 
@@ -33,7 +35,7 @@ function App() {
       <div className={styles.ChatContainer}>
         <Chat messages={messages} />
       </div>
-      <Controls onSend={handleSend}/>
+      <Controls onSend={handleSend} />
     </div>
   );
 }

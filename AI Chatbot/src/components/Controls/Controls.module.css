@@ -20,6 +20,13 @@
   outline: none;
   resize: none;
   background: #ffffff;
+  color: #111827;
+  caret-color: #111827;
+}
+
+.TextArea::placeholder {
+  color: #6b7280;
+  opacity: 1;
 }
 
 .Button {
