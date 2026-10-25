@@ -20,7 +20,8 @@ function App() {
     } catch (error) {
       console.error('Failed to send message:', error);
       const details = error instanceof Error ? error.message : String(error);
-      addMessage({ content: `The AI request failed: ${details}`, role: "system" });
+      console.error('Error details:', details);
+      addMessage({ content: `Sorry, I encountered an error while processing your request. Please try again later.`, role: "system" });
     }
   }
 
